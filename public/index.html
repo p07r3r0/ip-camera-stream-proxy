@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTSP Stream Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        #videoCanvas { max-width: 100%; height: auto; border: 1px solid #ddd; }
+    </style>
+</head>
+<body>
+    <h1>RTSP Stream Viewer</h1>
+    <canvas id="videoCanvas"></canvas>
+
+    <script src="/jsmpeg.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            fetch('/config')
+                .then(response => response.json())
+                .then(config => {
+                    var canvas = document.getElementById('videoCanvas');
+                    var player = new JSMpeg.Player(config.wsUrl, {canvas: canvas});
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
